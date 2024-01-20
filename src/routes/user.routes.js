@@ -40,11 +40,11 @@ router.post("/refresh-token", refreshAccessToken);
 router.post("/change-pass", verifyJWT, changeCurrentPassword);
 router.get("/current-user", verifyJWT, getCurrentUser);
 router.patch("/update-acc", verifyJWT, changeAccountDetails);
-router.patch("/avatar", verifyJWT, upload.single("/avatar"), updateUserAvatar);
+router.patch("/avatar", verifyJWT, upload.single("avatar"), updateUserAvatar);
 router.patch(
   "/cover-img",
   verifyJWT,
-  upload.single("/coverImage"),
+  upload.single("coverImage"),
   updateUserCoverImg
 );
 router.get("/c/:username", verifyJWT, getUserChannelProfile);

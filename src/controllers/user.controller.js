@@ -147,7 +147,7 @@ const logOutUser = asyncHandler(async (req, res) => {
     req.user._id,
     {
       $set: {
-        refreshToken: undefined,
+        refreshToken: null, // this remove the field from document
       },
     },
     {
@@ -164,7 +164,7 @@ const logOutUser = asyncHandler(async (req, res) => {
     .status(200)
     .clearCookie("accessToken", options)
     .clearCookie("refreshToken", options)
-    .json(new ApiResponse(200), {}, "User logged Out");
+    .json(new ApiResponse(200, {}, "User logged Out"));
 });
 
 const refreshAccessToken = asyncHandler(async (req, res) => {
@@ -371,7 +371,7 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
     throw new ApiError(404, "channel doen not exists");
   }
 
-  return response
+  return res
     .status(200)
     .json(new ApiResponse(200, channel[0], "User channel fethed Sucessfully"));
 });
@@ -419,13 +419,15 @@ const getWatchHistory = asyncHandler(async (req, res) => {
     },
   ]);
 
-  return res.status.json(
-    new ApiResponse(
-      200,
-      user[0].watchHistory,
-      "Watch History  fetched successfully"
-    )
-  );
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        user[0].watchHistory,
+        "Watch History  fetched successfully"
+      )
+    );
 });
 
 export {
